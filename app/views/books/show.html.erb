@@ -1,5 +1,24 @@
-<h2>タイトル</h2>
-<p><%= @book.title %></p>
+<% if flash[:notice] %>
+  <p id="notice">
+  　<%= flash[:notice] %>
+  </p>
+<% end %>
 
-<h2>本文</h2>
-<p><%=@book.body %></p>
+
+<% if @book.errors.any? %>
+<%= @book.errors.count %>件のエラーが発生しました
+<% @book.errors.full_messages.each do |message| %>
+<%= message %>
+<% end %>
+<% end %>
+
+
+
+<h2>Title:<%= @book.title %></h2>
+
+
+<h2>Body:<%=@book.body %></h2>
+
+
+<%= link_to "Edit", edit_book_path(@book.id) %>
+<%= link_to "Back",books_path(@book.id) %>
