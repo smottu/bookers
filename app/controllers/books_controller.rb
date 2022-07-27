@@ -7,8 +7,10 @@ class BooksController < ApplicationController
     @book = Book.new(book_params)
    if @book.save
     flash[:notice] = "successfully"
-    redirect_to books_path
+    redirect_to book_path(@book.id)
    else
+    flash.now[:alert] = "error"
+    @books = Book.all
     render :index
    end
   end
@@ -33,13 +35,15 @@ class BooksController < ApplicationController
      redirect_to book_path(@book.id)
     flash[:notice] = "successfully" 
     else
-     render :index
+      @books = Book.all
+     render :edit
     end
   end
   
   def destroy
     book = Book.find(params[:id])
     book.destroy
+    flash[:notice] = "successfully"
     redirect_to '/books'
   end
   
